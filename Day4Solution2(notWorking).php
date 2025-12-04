@@ -1,50 +1,54 @@
 <?php
 $inputs = file_get_contents();
-$warehouse = array_map("str_split", $inputs);
+$warehouse = array_map("str_split",explode(PHP_EOL,$inputs));
 function checkNeighbor($warehouse, $axisX, $axisY)
 {
+	if($warehouse[$axisY][$axisX] == '.'){
+		return false;
+	}
     $checks = [
-        [-1, -1],
-        [-1, 0],
-        [-1, 1],
-        [0, -1],
-        [0, 1],
-        [1, -1],
-        [1, 0],
-        [1, 1]
+        [$axisY -1, $axisX-1],
+        [$axisY-1, $axisX],
+        [$axisY-1, $axisX+1],
+        [$axisY, $axisX-1],
+        [$axisY, $axisX+1],
+        [$axisY+1, $axisX-1],
+        [$axisY+1, $axisX],
+        [$axisY+1, $axisX+1]
     ];
-    $checkCount = 0;
+        $checkCount = 0;
 
-    foreach ($checks as $check) {
-        if (($warehouse[$axisY + $check[0]][$axisX + $check[1]] ?? null) === "@") {
-            $checkCount++;
+        foreach ($checks as $check) {
+        	[$s,$t] = $check;
+        if (($warehouse[$s][$t] ?? null) === "@") {
+                $checkCount++;
+            }
         }
-    }
-    if ($checkCount < 4) {
-        return [$axisY, $axisX];
-    } else {
-        return null;
-    }
-
+        if ($checkCount < 4) {
+        	return [$axisY, $axisX];
+        } else {
+            return null;
+        }
+    
 }
 
 $coordinates = array();
-while (true) {
+while(true){
     $oldCoorinatesCount = count($coordinates);
-    foreach ($warehouse as $axisY => $row) {
-        foreach ($row as $axisX => $unused) {
-            $roll = checkNeighbor($warehouse, $axisX, $axisY);
-            if (is_array($roll)) {
-                $coordinates[] = $roll;
-            }
+foreach ($warehouse as $axisY => $row) {
+    foreach ($row as $axisX => $unused) {
+        $roll = checkNeighbor($warehouse,$axisX, $axisY);
+        if(is_array($roll)){
+            $coordinates[] = $roll;
         }
     }
-    foreach ($coordinates as $coordinate) {
-        $warehouse[$coordinate[0]][$coordinate[1]] = ".";
-    }
-    if ($oldCoorinatesCount > 0 && count($coordinates) == $oldCoorinatesCount) {
-        print_r(count($coordinates));
-        break;
-    }
-    $oldCoorinatesCount = count($coordinates);
+}
+foreach($coordinates as $coordinate){
+	[$x,$y] = $coordinate;
+    $warehouse[$x][$y] = ".";
+}
+if($oldCoorinatesCount > 0 && count($coordinates) == $oldCoorinatesCount) {
+print_r(count($coordinates));break;
+}
+$oldCoorinatesCount = count($coordinates);
 }
