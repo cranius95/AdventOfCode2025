@@ -3,7 +3,7 @@ $inputs = file_get_contents();
 $count = 0;
 $minimum = 0;
 $max = 0;
-$database = explode(PHP_EOL, $inputs);
+$database = explode(PHP_EOL, $input);
 foreach ($database as $item) {
     if (str_contains($item, '-')) {
         $ranges[] = $item;
@@ -14,20 +14,12 @@ $ranges = array_map(function ($item) {
 }, $ranges);
 sort($ranges);
 $results = [];
-foreach ($ranges as $range) {
-    if($range[1]<=$minimum){
-        continue;
-    }
-    //    $results[] = [$range[1]-$range[0]];
-
-    $min = ($range[0] >= $minimum) ? $range[0] : $minimum;
-    $max = $range[1];
-
-    if($min == $max ){
-        $count++;
-        continue;
-    }
-    $count += ($max-$min)+1; 
-    $minimum = $max;
+foreach ($ranges as $id => $range) {
+   if($range[0] > $minimum){
+       $count += ($range[1]-$range[0])+1;
+   }elseif($range[1] > $minimum){
+       $count += ($range[1]-$minimum);
+   }
+   $minimum = max($minimum,$range[1]);
 }
 print_r($count);
