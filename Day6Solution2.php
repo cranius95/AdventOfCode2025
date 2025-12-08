@@ -1,5 +1,5 @@
 <?php
-$inputs = '';
+$inputs = file_get_contents();
 $count = 0;
 $operand = null;
 $inputs = array_map('str_split',explode(PHP_EOL,$inputs));
