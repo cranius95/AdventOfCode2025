@@ -3,10 +3,10 @@ $inputs = file_get_contents();
 
 $inputs = array_map('str_split', explode(PHP_EOL, $inputs));
 $count = 0;
+$sum = [];
 foreach ($inputs[0] as $key => $value) {
     $sum[$key] = $value == '^' ? 1 : 0;
 }
-$sum = [];
 for ($i = 0; $i <= count($inputs); $i++) {
     for ($j = 0; $j <= count($inputs[0]); $j++) {
         if ($inputs[$i][$j] == '^' && $sum[$j]) {
