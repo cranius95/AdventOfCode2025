@@ -1,7 +1,7 @@
 <?php function adventDay3()
 {
     $inputs = file_get_contents();
-    $inputs = explode('PHP_EOL',$inputs);
+    $inputs = explode('PHP_EOL', $inputs);
     $results = array_map(function ($battery) {
         $values = array_map("intval", str_split($battery));
         while (count($values) > 12) {

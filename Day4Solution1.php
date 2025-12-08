@@ -21,7 +21,7 @@ foreach ($warehouse as $axisY => $row) {
 
             foreach ($checks as $check) {
                 [$X, $Y] = $check;
-                if (($warehouse[$axisX+$X][$axisY + $Y] ?? null) === "@") {
+                if (($warehouse[$axisX + $X][$axisY + $Y] ?? null) === "@") {
                     $checkCount++;
                 }
             }

@@ -15,11 +15,11 @@ $ranges = array_map(function ($item) {
 sort($ranges);
 $results = [];
 foreach ($ranges as $id => $range) {
-   if($range[0] > $minimum){
-       $count += ($range[1]-$range[0])+1;
-   }elseif($range[1] > $minimum){
-       $count += ($range[1]-$minimum);
-   }
-   $minimum = max($minimum,$range[1]);
+    if ($range[0] > $minimum) {
+        $count += ($range[1] - $range[0]) + 1;
+    } elseif ($range[1] > $minimum) {
+        $count += ($range[1] - $minimum);
+    }
+    $minimum = max($minimum, $range[1]);
 }
 print_r($count);

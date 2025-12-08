@@ -11,7 +11,7 @@ foreach ($steps as $step) {
     } elseif (str_contains($step, "L")) {
         $start = ($start - (int) $addition) % 100;
     }
- 
+
     if ($start == 0)
         $count++;
 }
